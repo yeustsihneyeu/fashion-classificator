@@ -1,0 +1,6 @@
+torch
+torchvision
+boto3
+sagemaker
+numpy
+pandas

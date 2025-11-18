@@ -1,0 +1,17 @@
+name: fashion-classificator
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - torch>=2.2.0
+      - torchvision>=0.17.0
+      - boto3
+      - sagemaker
+      - fastapi
+      - uvicorn
+      - numpy
+      - pandas
+      - scikit-learn

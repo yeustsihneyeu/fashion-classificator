@@ -1,0 +1,41 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_REGION: "eu-central-1"
+    ECR_REPO_PREPROCESS: "fashion-preprocess"
+    ECR_REPO_INFERENCE: "fashion-inference"
+    ACCOUNT_ID: "842675989330"
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo "✅ Install dependencies"
+      - pip install boto3 sagemaker
+      - echo "✅ Login ECR"
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+
+  build:
+    commands:
+      - echo "🚀 Build preprocessing image"
+      - cd preprocessing
+      - docker build -t $ECR_REPO_PREPROCESS:latest .
+      - docker tag $ECR_REPO_PREPROCESS:latest $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_PREPROCESS:latest
+      - docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_PREPROCESS:latest
+      - cd ..
+
+      - echo "🚀 Build inference image"
+      - cd inference_docker
+      - docker build -t $ECR_REPO_INFERENCE:latest .
+      - docker tag $ECR_REPO_INFERENCE:latest $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_INFERENCE:latest
+      - docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_INFERENCE:latest
+      - cd ..
+
+      - echo "✅ Run SageMaker Pipeline"
+      - python src/sagemaker_pipeline.py
+
+artifacts:
+  files:
+    - "**/*"
