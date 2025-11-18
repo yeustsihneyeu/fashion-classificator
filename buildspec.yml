@@ -28,7 +28,7 @@ phases:
 
       - echo "🚀 Build inference image"
       - cd inference_docker
-      - docker build -t $ECR_REPO_INFERENCE:latest .
+      - docker build -t $ECR_REPO_INFERENCE:latest -f inference_docker/Dockerfile .
       - docker tag $ECR_REPO_INFERENCE:latest $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_INFERENCE:latest
       - docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_INFERENCE:latest
       - cd ..
