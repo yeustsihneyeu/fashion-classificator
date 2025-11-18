@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.2.0-cpu
+FROM pytorch/pytorch:2.2.0-cpu-py3.10
 WORKDIR /opt/ml/model
 COPY app.py .
 COPY model.py .
