@@ -1,6 +1,12 @@
-FROM pytorch/pytorch:2.2.2-cpu-py3.10
+FROM python:3.11-slim
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libjpeg-dev \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /opt/ml/model
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py .
 COPY model.py .
-RUN pip install fastapi uvicorn pillow torchvision
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]

@@ -1,5 +1,11 @@
-FROM pytorch/pytorch:2.2.2-cpu-py3.10
+FROM python:3.11-slim
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libjpeg-dev \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /opt/ml/processing
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY preprocess.py .
-RUN pip install torchvision boto3
-ENTRYPOINT ["python", "preprocess.py"]
+CMD ["python", "preprocess.py"]
