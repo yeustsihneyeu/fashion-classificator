@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    AWS_REGION: "eu-central-1"
+    AWS_REGION: "us-east-1"
     ECR_REPO_PREPROCESS: "fashion-preprocess"
     ECR_REPO_INFERENCE: "fashion-inference"
     ACCOUNT_ID: "842675989330"
