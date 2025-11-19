@@ -11,14 +11,15 @@ from sagemaker.workflow.pipeline import Pipeline
 from sagemaker.workflow.pipeline_context import PipelineSession
 from sagemaker.workflow.steps import ProcessingStep, TrainingStep
 
-session = PipelineSession()
+bucket = os.environ["SAGEMAKER_DEFAULT_BUCKET"] = "yeustsihneyeu-fashion"
+session = PipelineSession(default_bucket=bucket)
 
 region = os.environ.get("AWS_REGION", session.boto_region_name)
 account_id = (
     os.environ.get("ACCOUNT_ID") or boto3.client("sts").get_caller_identity()["Account"]
 )
 role = os.environ["SAGEMAKER_PIPELINE_ROLE_ARN"]
-os.environ["SAGEMAKER_DEFAULT_BUCKET"] = "yeustsihneyeu-fashion"
+
 
 preprocess_image = (
     f"{account_id}.dkr.ecr.{region}.amazonaws.com/fashion-classificator:latest"
