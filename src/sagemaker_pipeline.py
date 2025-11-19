@@ -12,7 +12,7 @@ from sagemaker.workflow.pipeline_context import PipelineSession
 from sagemaker.workflow.steps import ProcessingStep, TrainingStep
 
 bucket = os.environ["SAGEMAKER_DEFAULT_BUCKET"] = "yeustsihneyeu-fashion"
-session = PipelineSession(default_bucket=bucket)
+session = PipelineSession(default_bucket="yeustsihneyeu-fashion")
 
 region = os.environ.get("AWS_REGION", session.boto_region_name)
 account_id = (
