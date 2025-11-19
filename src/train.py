@@ -1,4 +1,5 @@
 import os
+import time
 
 import torch
 import torch.nn as nn
@@ -23,12 +24,13 @@ def main():
     optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.5)
 
-    epochs = 15
+    epochs = 3
 
     for epoch in range(epochs):
         model.train()
         total_loss = 0
-        for X, y in loader:
+        start = time.time()
+        for batch_idx, (X, y) in enumerate(loader):
             optimizer.zero_grad()
             y_hat = model(X)
             loss = criterion(y_hat, y)
@@ -36,8 +38,20 @@ def main():
             optimizer.step()
             total_loss += loss.item()
 
+            if batch_idx % 100 == 0:
+                print(
+                    f"Epoch {epoch+1}/{epochs}, batch {batch_idx}, "
+                    f"loss {loss.item():.4f}",
+                    flush=True,
+                )
+
     scheduler.step()
-    print(f"Epoch [{epoch+1}/{epochs}]  " f"Train Loss: {loss/len(loader):.4f}")
+    avg_loss = total_loss / len(loader)
+    print(
+        f"✅ Epoch [{epoch+1}/{epochs}] finished in {time.time() - start:.1f}s, "
+        f"avg loss: {avg_loss:.4f}",
+        flush=True,
+    )
 
     os.makedirs(model_dir, exist_ok=True)
     torch.save(model.state_dict(), os.path.join(model_dir, "model.pth"))
