@@ -65,16 +65,6 @@ train_step = TrainingStep(
     },
 )
 
-# --- Step 3: Register Model ---
-model_step = ModelStep(
-    name="RegisterModel",
-    model=Model(
-        image_uri=train_estimator.training_image_uri(),
-        model_data=train_step.properties.ModelArtifacts.S3ModelArtifacts,
-        role=role,
-    ),
-)
-
 # --- Step 4: Deploy (Serverless Inference) ---
 inference_model = Model(
     image_uri=inference_image,
@@ -84,16 +74,20 @@ inference_model = Model(
 
 serverless_config = ServerlessInferenceConfig(memory_size_in_mb=2048, max_concurrency=2)
 
+deploy_step_args = inference_model.deploy(
+    serverless_inference_config=serverless_config,
+    endpoint_name="fashion-serverless-endpoint",
+)
+
 deploy_step = ModelStep(
     name="DeployServerlessEndpoint",
-    model=inference_model,
-    model_deploy_config=serverless_config,
+    step_args=deploy_step_args,
 )
 
 # --- Build pipeline ---
 pipeline = Pipeline(
     name="FashionMNISTServerlessPipeline",
-    steps=[preprocess_step, train_step, model_step, deploy_step],
+    steps=[preprocess_step, train_step, deploy_step],
     sagemaker_session=session,
 )
 
