@@ -3,7 +3,7 @@ import os
 import boto3
 import sagemaker
 from sagemaker.model import Model
-from sagemaker.processing import Processor
+from sagemaker.processing import ProcessingOutput, Processor
 from sagemaker.pytorch import PyTorch
 from sagemaker.serverless import ServerlessInferenceConfig
 from sagemaker.workflow.model_step import ModelStep
@@ -39,10 +39,11 @@ preprocess_step = ProcessingStep(
     name="PreprocessFashionData",
     processor=preprocess_processor,
     outputs=[
-        {
-            "OutputName": "train",
-            "S3Output": "s3://yeustsihneyeu-fashion/fashion/preprocessed/",
-        }
+        ProcessingOutput(
+            output_name="train",
+            source="/opt/ml/processing/train",
+            destination="s3://yeustsihneyeu-fashion/fashion/preprocessed/",
+        )
     ],
 )
 
