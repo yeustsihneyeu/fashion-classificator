@@ -52,7 +52,7 @@ train_estimator = PyTorch(
     role=role,
     instance_type="ml.t3.medium",
     framework_version="2.2",
-    py_version="py311",
+    py_version="py310",
 )
 
 train_step = TrainingStep(
