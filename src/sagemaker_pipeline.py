@@ -11,7 +11,6 @@ from sagemaker.workflow.pipeline import Pipeline
 from sagemaker.workflow.pipeline_context import PipelineSession
 from sagemaker.workflow.steps import ProcessingStep, TrainingStep
 
-bucket = os.environ["SAGEMAKER_DEFAULT_BUCKET"] = "yeustsihneyeu-fashion"
 session = PipelineSession(default_bucket="yeustsihneyeu-fashion")
 
 region = os.environ.get("AWS_REGION", session.boto_region_name)
@@ -57,6 +56,7 @@ train_estimator = PyTorch(
     instance_type="ml.t3.medium",
     framework_version="2.2",
     py_version="py310",
+    sagemaker_session=session,
 )
 
 train_step = TrainingStep(
