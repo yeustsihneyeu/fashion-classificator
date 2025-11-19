@@ -7,8 +7,9 @@ from sagemaker.model import Model
 from sagemaker.processing import Processor
 from sagemaker.pytorch import PyTorch
 from sagemaker.serverless import ServerlessInferenceConfig
+from sagemaker.workflow.model_step import ModelStep
 from sagemaker.workflow.pipeline import Pipeline
-from sagemaker.workflow.steps import ModelStep, ProcessingStep, TrainingStep
+from sagemaker.workflow.steps import ProcessingStep, TrainingStep
 
 session = Session()
 
