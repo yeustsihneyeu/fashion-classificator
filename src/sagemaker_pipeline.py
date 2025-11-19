@@ -18,6 +18,7 @@ account_id = (
     os.environ.get("ACCOUNT_ID") or boto3.client("sts").get_caller_identity()["Account"]
 )
 role = os.environ["SAGEMAKER_PIPELINE_ROLE_ARN"]
+os.environ["SAGEMAKER_DEFAULT_BUCKET"] = "yeustsihneyeu-fashion"
 
 preprocess_image = (
     f"{account_id}.dkr.ecr.{region}.amazonaws.com/fashion-classificator:latest"
