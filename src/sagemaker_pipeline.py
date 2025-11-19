@@ -54,6 +54,7 @@ train_estimator = PyTorch(
     source_dir="src",
     role=role,
     instance_type="ml.t3.medium",
+    instance_count=1,
     framework_version="2.2",
     py_version="py310",
     sagemaker_session=session,
