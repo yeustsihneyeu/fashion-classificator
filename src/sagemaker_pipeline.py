@@ -21,10 +21,10 @@ role = os.environ["SAGEMAKER_PIPELINE_ROLE_ARN"]
 
 
 preprocess_image = (
-    f"{account_id}.dkr.ecr.{region}.amazonaws.com/fashion-classificator:latest"
+    f"{account_id}.dkr.ecr.{region}.amazonaws.com/fashion-preprocess:latest"
 )
 inference_image = (
-    f"{account_id}.dkr.ecr.{region}.amazonaws.com/fashion-classificator:latest"
+    f"{account_id}.dkr.ecr.{region}.amazonaws.com/fashion-inference:latest"
 )
 
 # --- Step 1: Preprocessing ---
