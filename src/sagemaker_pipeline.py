@@ -1,6 +1,8 @@
 import os
 
-from sagemaker import Session, get_execution_role
+import boto3
+import sagemaker
+from sagemaker import Session
 from sagemaker.model import Model
 from sagemaker.processing import Processor
 from sagemaker.pytorch import PyTorch
@@ -8,11 +10,13 @@ from sagemaker.serverless import ServerlessInferenceConfig
 from sagemaker.workflow.pipeline import Pipeline
 from sagemaker.workflow.steps import ModelStep, ProcessingStep, TrainingStep
 
-role = get_execution_role()
 session = Session()
 
-account_id = os.environ["ACCOUNT_ID"]
-region = os.environ["AWS_REGION"]
+region = os.environ.get("AWS_REGION", session.boto_region_name)
+account_id = (
+    os.environ.get("ACCOUNT_ID") or boto3.client("sts").get_caller_identity()["Account"]
+)
+role = os.environ["SAGEMAKER_PIPELINE_ROLE_ARN"]
 
 preprocess_image = (
     f"{account_id}.dkr.ecr.{region}.amazonaws.com/fashion-classificator:latest"
