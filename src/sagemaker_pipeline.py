@@ -42,7 +42,7 @@ preprocess_step = ProcessingStep(
     outputs=[
         ProcessingOutput(
             output_name="train",
-            source="/opt/ml/processing/train",
+            source="/opt/ml/processing/output",
             destination="s3://yeustsihneyeu-fashion/fashion/preprocessed/",
         )
     ],
