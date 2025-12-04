@@ -13,7 +13,8 @@ phases:
       python: 3.11
     commands:
       - echo "✅ Install dependencies"
-      - pip install boto3 sagemaker
+      - pip install boto3
+      - pip install --upgrade 'sagemaker>=2.150.0'
       - echo "✅ Login ECR"
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
 
