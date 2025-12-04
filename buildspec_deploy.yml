@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo "✅ Install dependencies"
+      - pip install boto3
+      - pip install "sagemaker==2.227.0"
+
+  build:
+    commands:
+      - echo "🚀 Run Serverless Deployment"
+      - python src/deploy_serverless.py

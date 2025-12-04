@@ -7,12 +7,14 @@ from sagemaker.serverless import ServerlessInferenceConfig
 
 session = sagemaker.Session()
 region = session.boto_region_name
-account_id = boto3.client("sts").get_caller_identity()["Account"]
+
+account_id = (
+    os.environ.get("ACCOUNT_ID") or boto3.client("sts").get_caller_identity()["Account"]
+)
 
 role = os.environ["SAGEMAKER_PIPELINE_ROLE_ARN"]
-s3_bucket = os.environ.get("S3_BUCKET", "fashion-mlops-bucket")
 
-model_data = f"s3://{s3_bucket}/fashion/models/latest/model.tar.gz"
+model_data = f"s3://yeustsihneyeu-fashion/pipelines-h3htitdtpd20-TrainModel-Sx40s9zGcu/output/model.tar.gz"
 
 inference_image = (
     f"{account_id}.dkr.ecr.{region}.amazonaws.com/fashion-inference:latest"
