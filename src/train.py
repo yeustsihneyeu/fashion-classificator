@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 
-from model import FashionCNN
+from fashion_model import FashionCNN
 
 
 def main():
@@ -45,13 +45,14 @@ def main():
                     flush=True,
                 )
 
-    scheduler.step()
-    avg_loss = total_loss / len(loader)
-    print(
-        f"✅ Epoch [{epoch+1}/{epochs}] finished in {time.time() - start:.1f}s, "
-        f"avg loss: {avg_loss:.4f}",
-        flush=True,
-    )
+        scheduler.step()
+
+        avg_loss = total_loss / len(loader)
+        print(
+            f"✅ Epoch [{epoch+1}/{epochs}] finished in {time.time() - start:.1f}s, "
+            f"avg loss: {avg_loss:.4f}",
+            flush=True,
+        )
 
     os.makedirs(model_dir, exist_ok=True)
     torch.save(model.state_dict(), os.path.join(model_dir, "model.pth"))

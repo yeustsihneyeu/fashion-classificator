@@ -5,7 +5,7 @@ from fastapi import FastAPI, File, UploadFile
 from PIL import Image
 from torchvision import transforms
 
-from model import CLASSES, FashionCNN
+from fashion_model import CLASSES, FashionCNN
 
 app = FastAPI()
 model = FashionCNN()

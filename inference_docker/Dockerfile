@@ -8,5 +8,5 @@ WORKDIR /opt/ml/model
 COPY inference_docker/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY inference_docker/app.py .
-COPY src/model.py .
+COPY src/fashion_model.py .
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
