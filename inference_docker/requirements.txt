@@ -5,3 +5,4 @@ sagemaker-inference
 fastapi
 uvicorn
 pillow
+
