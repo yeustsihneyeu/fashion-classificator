@@ -5,3 +5,4 @@ torchvision==0.19.1
 fastapi
 uvicorn
 pillow
+sagemaker-inference
