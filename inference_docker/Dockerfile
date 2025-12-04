@@ -10,4 +10,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY inference_docker/app.py .
 COPY src/fashion_model.py .
 ENV SAGEMAKER_PROGRAM=app.py
-CMD ["python", "-m", "sagemaker_inference"]
+
+RUN printf '#!/usr/bin/env bash\npython -m sagemaker_inference \"$@\"\n' > /usr/local/bin/serve && \
+    chmod +x /usr/local/bin/serve
