@@ -11,5 +11,5 @@ COPY inference_docker/app.py .
 COPY src/fashion_model.py .
 ENV SAGEMAKER_PROGRAM=app.py
 
-RUN printf '#!/usr/bin/env bash\npython -m sagemaker_inference \"$@\"\n' > /usr/local/bin/serve && \
+RUN printf '#!/usr/bin/env bash\nuvicorn app:app --host 0.0.0.0 --port 8080\n' > /usr/local/bin/serve && \
     chmod +x /usr/local/bin/serve
