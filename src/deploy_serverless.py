@@ -37,4 +37,7 @@ predictor = inference_model.deploy(
     endpoint_name="fashion-serverless-endpoint",
 )
 
-print("✅ Deployed endpoint:", predictor.endpoint_name)
+if predictor is not None:
+    print("✅ Deployed endpoint:", predictor.endpoint_name)
+else:
+    print(f"✅ Deploy request sent for endpoint: {endpoint_name}")
