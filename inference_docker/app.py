@@ -9,9 +9,13 @@ from fashion_model import CLASSES, FashionCNN
 
 app = FastAPI()
 
+MODEL_PATH = os.getenv("MODEL_PATH", "/opt/ml/model/model.pth")
+
+print("### Loading model from", MODEL_PATH, flush=True)
 model = FashionCNN()
-model.load_state_dict(torch.load("/opt/ml/model/model.pth", map_location="cpu"))
+model.load_state_dict(torch.load(MODEL_PATH, map_location="cpu"))
 model.eval()
+print("### Model loaded", flush=True)
 
 transform = transforms.Compose(
     [
