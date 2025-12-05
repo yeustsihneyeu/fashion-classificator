@@ -22,8 +22,8 @@ transform = transforms.Compose(
     [
         transforms.Grayscale(num_output_channels=1),
         transforms.Resize((28, 28)),
-        transforms.Lambda(lambda x: 1.0 - x),
         transforms.ToTensor(),
+        transforms.Lambda(lambda x: 1.0 - x),
         transforms.Normalize((0.5,), (0.5,)),
     ]
 )
