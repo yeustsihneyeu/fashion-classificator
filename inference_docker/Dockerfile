@@ -14,5 +14,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/fashion_model.py .
 COPY inference_docker/app.py .
 
-RUN printf '#!/usr/bin/env bash\ncd /opt/ml/model\nexec uvicorn app:app --host 0.0.0.0 --port 8080\n' > /usr/local/bin/serve && \
+RUN printf '#!/usr/bin/env bash\nset -xe\npwd\nls -R\nuvicorn app:app --host 0.0.0.0 --port 8080 --app-dir /opt/ml/model\n' > /usr/local/bin/serve && \
     chmod +x /usr/local/bin/serve
